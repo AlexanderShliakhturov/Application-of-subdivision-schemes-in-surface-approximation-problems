@@ -3,9 +3,16 @@ pandas
 scipy
 matplotlib
 seaborn
+<<<<<<< HEAD
 jupyterlab>=4.4.9
 torch --index-url https://download.pytorch.org/whl/cpu
 torchvision --index-url https://download.pytorch.org/whl/cpu
 torchaudio --index-url https://download.pytorch.org/whl/cpu
+=======
+# jupyterlab>=4.4.9
+# torch --index-url https://download.pytorch.org/whl/cpu
+# torchvision --index-url https://download.pytorch.org/whl/cpu
+# torchaudio --index-url https://download.pytorch.org/whl/cpu
+>>>>>>> 03ac420b75506313f7cba31626a7b2787ed11f36
 tqdm
 plotly
