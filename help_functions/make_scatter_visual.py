@@ -4,6 +4,7 @@ import pandas as pd
 # import scipy
 import matplotlib.pyplot as plt
 import seaborn
+import torch
 
 import plotly.graph_objects as go
 import plotly.express as px
@@ -13,7 +14,7 @@ def make_scatter_visual(tensor_3d, name):
     
     plt.ioff()
     
-    points = np.argwhere(tensor_3d != 0)
+    points = torch.argwhere(tensor_3d != 0)
         
     
     x = points[:, 0]
@@ -44,6 +45,8 @@ def make_scatter_visual(tensor_3d, name):
     # plt.show()
     
     fig.savefig(f'./images/{name}.png')
+    
+    plt.close(fig)
     
     print(f"Всего точек: {len(points)}")
     print(f"Размер тензора: {tensor_3d.shape}")

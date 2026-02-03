@@ -7,17 +7,20 @@ import seaborn
 
 import plotly.graph_objects as go
 import plotly.express as px
+import torch
 
 
-def make_html_visual(tensor_3d, name):
+def make_html_visual(tensor_3d, name, colorscale='Jet'):
 
-    points = np.argwhere(tensor_3d != 0)
+    points = torch.argwhere(tensor_3d != 0)
+    
+    # print(points)
         
     title = "Облако точек"
         
     x, y, z = points[:, 0], points[:, 1], points[:, 2]
 
-    colors = z
+    colors = y
 
     fig = go.Figure(data=[go.Scatter3d(
         x=x,
@@ -27,11 +30,11 @@ def make_html_visual(tensor_3d, name):
         marker=dict(
             size=4,
             color=colors,
-            colorscale='Jet',
+            colorscale=colorscale,
             opacity=0.8,
             colorbar=dict(title="Z"),
         ),
-        text=[f'({xi}, {yi}, {zi})' for xi, yi, zi in points],
+        text=[f'({row[0]}, {row[1]}, {row[2]})' for row in points],
         hovertemplate='<b>Координаты</b>: %{text}<br>' +
                     '<b>Z</b>: %{z}<extra></extra>'
     )])

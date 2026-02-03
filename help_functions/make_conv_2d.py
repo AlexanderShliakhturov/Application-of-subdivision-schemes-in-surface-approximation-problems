@@ -1,7 +1,8 @@
 import numpy as np
 
 def make_conv_2d(source, kernel):
-
+    
+    
     result = np.zeros(shape = source.shape)
 
     pad_height = kernel.shape[0] // 2
