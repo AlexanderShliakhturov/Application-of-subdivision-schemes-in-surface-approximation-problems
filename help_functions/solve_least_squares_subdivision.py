@@ -20,6 +20,8 @@ def solve_least_squares_subdivision(
     """
     Решаем: min ||A d - z||^2
     """
+    z = z.float()
+    mask = mask.float()
     # dims = z.ndim
     # # начальная инициализация
     # slices = tuple(slice(None, None, 2) for _ in range(dims))
