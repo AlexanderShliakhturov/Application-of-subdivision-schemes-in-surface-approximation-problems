@@ -14,15 +14,10 @@ def build_kernel(mask: torch.Tensor, dim: int, device=None):
     else:
         raise ValueError("Only 1D, 2D, 3D supported")
 
-    # conv_transpose не требует flip
+    # conv_transpose не требует flip, это типа и так транспонированный оператор
     kernel = kernel.unsqueeze(0).unsqueeze(0)
     return kernel
 
-
-# ============================================================
-#  A operator  (upsample + filter)
-#  реализован через conv_transpose
-# ============================================================
 
 def Sub_A_fast(x, kernel):
     dim = x.ndim
@@ -40,10 +35,6 @@ def Sub_A_fast(x, kernel):
     return out.squeeze(0).squeeze(0)
 
 
-# ============================================================
-#  A^T operator (filter + downsample)
-# ============================================================
-
 def Sub_AT_fast(x, kernel):
     dim = x.ndim
     padding = kernel.shape[-1] // 2
@@ -59,10 +50,6 @@ def Sub_AT_fast(x, kernel):
 
     return out.squeeze(0).squeeze(0)
 
-
-# ============================================================
-#  A^j и (A^T)^j
-# ============================================================
 
 def apply_A_j(x, kernel, j):
     for _ in range(j):
@@ -80,10 +67,6 @@ def apply_C_j(x, kernel, j):
     # C = (A^T)^j A^j
     return apply_AT_j(apply_A_j(x, kernel, j), kernel, j)
 
-
-# ============================================================
-#  Solver (Steepest Descent)
-# ============================================================
 
 def solve_least_squares_subdivision_fast(
     z: torch.Tensor,

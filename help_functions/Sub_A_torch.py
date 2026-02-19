@@ -30,13 +30,11 @@ def Sub_A_torch(mask: torch.Tensor, x_0: torch.Tensor):
     
     #Переворот ядра
     kernel = kernel.flip(tuple(range(s)))
-    #Добавляем новую размерность для соответствия протоколу convNd
     kernel = kernel.unsqueeze(0).unsqueeze(0)
     
     x = x_0.clone()
     Up_x = torch.zeros(1, 1, *(2 * np.array(x.shape)))
 
-    
     #upsample + padd
     if (s==1):
         Up_x[..., ::2] = x[:]
@@ -45,18 +43,16 @@ def Sub_A_torch(mask: torch.Tensor, x_0: torch.Tensor):
     else:
         Up_x[..., ::2, ::2, ::2] = x[:, :, :]
         
-
     # padding по каждой оси
     pads = []
     for k in reversed(kernel.shape[2:]):
         p = k // 2
         pads.extend([p, p])
 
-    # pads в нужном порядке (W, H, D)
+    # pads в conv нужно добавлять в обратной последовательности, т.е W, H, D
     Up_x_padded = F.pad(Up_x, pads)
     
     conv_result = conv_func(Up_x_padded, kernel)
     
     return conv_result.squeeze(0).squeeze(0)[(slice(None, -1),) * (conv_result.ndim - 2)]
-    # return conv_result.squeeze(0).squeeze(0)[:-1:1]
         
