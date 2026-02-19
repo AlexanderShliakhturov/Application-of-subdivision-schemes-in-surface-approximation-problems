@@ -12,6 +12,10 @@ def make_conv_3d_torch(source: torch.Tensor, kernel: torch.Tensor) -> torch.Tens
 
     source = source.float()
     kernel = kernel.float()
+    
+    device = source.device
+    
+    kernel = kernel.to(device)
 
     # conv3d формат
     # source: (N, C, D, H, W)

@@ -31,8 +31,7 @@ def shadows_visual(input_tensor: torch.Tensor, name: str, layers = 'vertical'):
         surface_rot = torch.rot90(surface, k=1, dims=(0,1))
     
     else:
-        print('Wrong "layers" variable')
-        return
+        surface_rot = surface
 
 
     verts, faces, normals = volume_to_mesh(surface_rot)
@@ -53,7 +52,7 @@ def shadows_visual(input_tensor: torch.Tensor, name: str, layers = 'vertical'):
         specular=0.5,
         specular_power=30
     )
-    plotter.view_yz()
+    # plotter.view_yz()
 
 
 

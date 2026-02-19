@@ -148,7 +148,7 @@ def solve_least_squares_subdivision_CG(
     kernel = build_kernel(mask, dim, device)
 
     # b = (A^T)^j z
-    b = apply_AT_j(z, kernel, j)
+    b = apply_AT_j(z, kernel, j) 
 
     # начальное приближение
     x = torch.zeros_like(b)
