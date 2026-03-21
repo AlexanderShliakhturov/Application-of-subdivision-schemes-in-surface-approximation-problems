@@ -17,24 +17,31 @@ def volume_to_mesh(volume: torch.Tensor, level=0.5):
     return verts, faces, normals
 
 
-def shadows_visual(input_tensor: torch.Tensor, name: str, layers = 'vertical'):
+def shadows_visual(
+    input_tensor: torch.Tensor,
+    name: str,
+    layers='vertical',
+    level=0.5,
+    ambient=0.3,
+    diffuse=0.8,
+    specular=0.5,
+    specular_power=30,
+    roughness=0.3,
+    window_size=(1000, 1000)
+):
 
     surface = input_tensor
 
     if layers == 'horizontal':
-
         surface_rot = torch.rot90(surface, k=1, dims=(1,2))
-        surface_rot = torch.rot90(surface_rot, k=2, dims=(0,1))
+        surface_rot = torch.rot90(surface_rot, k=1, dims=(0,1))
         surface_rot = torch.rot90(surface_rot, k=-1, dims=(0,1))
-
     elif layers == 'vertical':
         surface_rot = torch.rot90(surface, k=1, dims=(0,1))
-    
     else:
         surface_rot = surface
 
-
-    verts, faces, normals = volume_to_mesh(surface_rot)
+    verts, faces, normals = volume_to_mesh(surface_rot, level=level)
 
     faces_pv = np.hstack(
         [np.full((faces.shape[0], 1), 3), faces]
@@ -43,24 +50,23 @@ def shadows_visual(input_tensor: torch.Tensor, name: str, layers = 'vertical'):
     mesh = pv.PolyData(verts, faces_pv)
     mesh.point_data["Normals"] = normals
 
-    plotter = pv.Plotter(off_screen=True,
-                        window_size=(3000, 3000))
+    plotter = pv.Plotter(window_size=window_size)
+
     plotter.add_mesh(
         mesh,
         color="gold",
-        smooth_shading=False,
-        specular=0.5,
-        specular_power=30
+        pbr=True,
+        ambient=ambient,
+        diffuse=diffuse,
+        specular=specular,
+        specular_power=specular_power,
+        roughness=roughness,
     )
-    # plotter.view_yz()
+    plotter.add_axes()
+    
+    plotter.add_light(pv.Light(position=(50,450,1000), intensity=2))
 
-
-
-    # plotter.show(screenshot="figure_x0.png",
-    #              window_size=(3000, 3000))
-    # plotter.save_graphic(f"{name}.pdf")
-    plotter.screenshot(f"{name}.png")
-    plotter.close()
+    plotter.show(screenshot=f"{name}.png")
 
 # plotter.save_graphic
 
@@ -71,7 +77,7 @@ def shadows_visual_UI(
     isomin=0.6,
     isomax=1.5,
     downsample=1,
-    colorscale="Oranges"
+    colorscale=[[0, 'rgb(255,255,0)'], [1, 'rgb(255,255,0)']]
 ):
     """
     Воксельная визуализация через Plotly Isosurface
@@ -157,41 +163,3 @@ def shadows_visual_UI(
     # )
 
     fig.write_html(f"{name}.html")
-
-def shadows_visual_volume_plotly(input_tensor, name, layers = 'vertical'):
-
-
-    surface = input_tensor
-    
-    if layers == 'horizontal':
-
-        surface_rot = torch.rot90(surface, k=1, dims=(1,2))
-        surface_rot = torch.rot90(surface_rot, k=2, dims=(0,1))
-        surface_rot = torch.rot90(surface_rot, k=-1, dims=(0,1))
-
-    elif layers == 'vertical':
-        surface_rot = torch.rot90(surface, k=1, dims=(0,1))
-    
-    else:
-        print('Wrong "layers" variable')
-        return
-
-    volume = surface_rot.detach().cpu().numpy()
-    grid = pv.wrap(volume)
-
-    plotter = pv.Plotter(off_screen=True, window_size=(3000, 3000))
-    plotter.add_volume(
-        grid,
-        cmap="Oranges",
-        opacity="sigmoid",
-        shade=True,
-        show_scalar_bar=False,
-        diffuse=1.0,
-        specular=0.3,
-        ambient=0.2
-    )
-    
-    plotter.set_background("white")
-    plotter.view_yz()
-    plotter.screenshot(f"{name}.png")
-    plotter.close()

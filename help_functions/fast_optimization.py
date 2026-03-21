@@ -24,13 +24,14 @@ def Sub_A_fast(x, kernel):
     padding = kernel.shape[-1] // 2
 
     x = x.unsqueeze(0).unsqueeze(0)
-
+    stride = 2
+    
     if dim == 1:
-        out = F.conv_transpose1d(x, kernel, stride=2, padding=padding)
+        out = F.conv_transpose1d(x, kernel, stride=stride, padding=padding, output_padding=1)
     elif dim == 2:
-        out = F.conv_transpose2d(x, kernel, stride=2, padding=padding)
+        out = F.conv_transpose2d(x, kernel, stride=stride, padding=padding, output_padding=1)
     else:
-        out = F.conv_transpose3d(x, kernel, stride=2, padding=padding)
+        out = F.conv_transpose3d(x, kernel, stride=stride, padding=padding, output_padding=1)
 
     return out.squeeze(0).squeeze(0)
 
@@ -40,13 +41,14 @@ def Sub_AT_fast(x, kernel):
     padding = kernel.shape[-1] // 2
 
     x = x.unsqueeze(0).unsqueeze(0)
+    stride = 2
 
     if dim == 1:
-        out = F.conv1d(x, kernel, stride=2, padding=padding)
+        out = F.conv1d(x, kernel, stride=stride, padding=padding, )
     elif dim == 2:
-        out = F.conv2d(x, kernel, stride=2, padding=padding)
+        out = F.conv2d(x, kernel, stride=stride, padding=padding)
     else:
-        out = F.conv3d(x, kernel, stride=2, padding=padding)
+        out = F.conv3d(x, kernel, stride=stride, padding=padding)
 
     return out.squeeze(0).squeeze(0)
 
