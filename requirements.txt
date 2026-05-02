@@ -3,7 +3,7 @@ pandas
 scipy
 matplotlib
 seaborn
-jupyterlab>=4.4.9
+# jupyterlab>=4.4.9
 torch --index-url https://download.pytorch.org/whl/cpu
 # torchvision --index-url https://download.pytorch.org/whl/cpu
 # torchaudio --index-url https://download.pytorch.org/whl/cpu
@@ -11,3 +11,22 @@ tqdm
 plotly
 scikit-image
 pyvista
+sk-video
+h5py
+# astor==0.8.1
+# gast
+keras-applications
+keras-preprocessing
+imageio-ffmpeg==0.4.2
+imbalanced-learn==0.6.2
+moviepy==1.0.3
+opencv-python==3.4.9.33
+opt-einsum==3.2.1
+proglog==0.1.9
+pytz==2020.1
+tensorboard==1.15.0
+tensorflow
+tensorflow-estimator==1.15.1
+termcolor==1.1.0
+wrapt==1.12.1
+youtube-dl==2020.6.6

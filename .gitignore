@@ -1,5 +1,9 @@
 /.diplom3d
 /.diplom
-/.ipynb_checkpoints
-__pycache__/
 *deb
+/siren/logs
+__pycache__/
+.ipynb_checkpoints/
+gifs
+make_gif.py
+images

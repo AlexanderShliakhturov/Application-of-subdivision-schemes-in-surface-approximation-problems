@@ -4,7 +4,7 @@ import torch
 def plot_subdivision_points(data: torch.Tensor, 
                             threshold=0.05, 
                             title="", 
-                            figsize = (10,10), 
+                            figsize = (5,5), 
                             do_ceil = False,
                             visual_type = "scatter"):
     """

@@ -1,4 +1,5 @@
 import numpy as np
+import os
 import pandas as pd
 # import torch
 # import scipy
@@ -10,7 +11,7 @@ import plotly.express as px
 import torch
 
 
-def make_html_visual(tensor_3d, name, colorscale='Jet'):
+def make_html_visual(tensor_3d, name, subfolder: str = None, colorscale='Jet'):
 
     points = torch.argwhere(tensor_3d != 0)
     
@@ -51,9 +52,11 @@ def make_html_visual(tensor_3d, name, colorscale='Jet'):
         height=800,
         hovermode='closest'
     )
-
-    fig.write_html(f"./htmls/{name}.html", include_plotlyjs="cdn", full_html=False)
-    print(f"Файл сохранен в ./htmls/{name}.html")
+    root_folder = 'subdivision_results'
+    os.makedirs(f"./{root_folder}/{subfolder}", exist_ok=True)
+    filepath = os.path.join(root_folder, subfolder, f"{name}.html")
+    fig.write_html(filepath, include_plotlyjs="cdn", full_html=False)
+    print(f"Файл сохранен в {filepath}")
     
 
 
