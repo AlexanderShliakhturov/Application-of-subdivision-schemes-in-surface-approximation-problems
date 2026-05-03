@@ -27,6 +27,7 @@ def shadows_visual(
     name: str,
     subfolder: str,
     layers=None,
+    root_folder = 'subdivision_results',
     level=0.5,
     ambient=0.3,
     diffuse=0.8,
@@ -78,7 +79,6 @@ def shadows_visual(
     plotter.add_light(pv.Light(position=light_position, intensity=2))
     
     plotter.camera_position = camera_position
-    root_folder = 'subdivision_results'
     os.makedirs(f"./{root_folder}/{subfolder}", exist_ok=True)
     filepath = os.path.join(root_folder, subfolder, f"{name}.png")
     plotter.show(screenshot=filepath)
@@ -89,6 +89,7 @@ def points_visual(
     input_tensor: torch.Tensor,
     name: str,
     subfolder: str,
+    root_folder = 'subdivision_results',
     threshold=0.5,
     layers=None,
     point_size=5,
@@ -124,7 +125,6 @@ def points_visual(
     plotter.add_axes()
     plotter.camera_position = camera_position
 
-    root_folder = 'subdivision_results'
     os.makedirs(f"./{root_folder}/{subfolder}", exist_ok=True)
     filepath = os.path.join(root_folder, subfolder, f"{name}.png")
     plotter.show(screenshot=filepath)

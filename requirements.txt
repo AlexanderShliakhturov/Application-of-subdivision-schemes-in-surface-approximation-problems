@@ -30,3 +30,5 @@ tensorflow-estimator==1.15.1
 termcolor==1.1.0
 wrapt==1.12.1
 youtube-dl==2020.6.6
+
+openpyxl

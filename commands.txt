@@ -1,9 +1,12 @@
 
 Инференс модели
 ~/DIPLOM/siren$ python ./experiment_scripts/test_sdf.py --checkpoints_path=./logs/experiment_BuddaWithNormals_batch_size16384_lr1e-4_epoch20/checkpoints --experiment_name=experiment_BuddaWithNormals_batch_size16384_lr1e-4_epoch20 --resolution=512 --step=10
+~/DIPLOM/siren$ python ./experiment_scripts/test_sdf.py --checkpoints_path=./logs/experiment_HandWithNormals_batch_size16384_lr1e-4_epoch300/checkpoints --experiment_name=experiment_HandWithNormals_batch_size16384_lr1e-4_epoch300 --resolution=512 --step=1
+
 или
 ~/DIPLOM/siren$ python ./experiment_scripts/test_sdf.py --checkpoint_path=./logs/experiment_BuddaWithNormals_batch_size16384_lr1e-4_epoch20/checkpoints/model_current.pth --experiment_name=experiment_BuddaWithNormals_batch_size16384_lr1e-4_epoch20 --resolution=512 --filename=epoch20
 
 
 Обучение модели
 ~/DIPLOM/siren$ python ./experiment_scripts/train_sdf.py --model_type=sine --point_cloud_path=../models/BuddaWithNormals.xyz --batch_size=16384 --experiment_name=experiment_BuddaWithNormals_batch_size16384_lr1e-4_epoch20 --num_epoch=20 --lr=1e-4
+~/DIPLOM/siren$ python ./experiment_scripts/train_sdf.py --model_type=sine --point_cloud_path=../models/HandWithNormals.xyz --batch_size=16384 --experiment_name=experiment_HandWithNormals_batch_size16384_lr1e-4_epoch300 --num_epoch=300 --lr=1e-4 --epochs_til_ckp=1
